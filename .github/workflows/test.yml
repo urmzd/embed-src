@@ -1,0 +1,14 @@
+name: "Test"
+
+on: [push]
+
+jobs:
+  embed-example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Run entrypoint script."
+        uses: ./
+        id: "embed-code" 
+        with:
+          markdownFiles: "README.md" 
+          commit-message: "chore: embed example using self"

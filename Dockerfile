@@ -3,11 +3,7 @@ FROM node:14
 RUN npm install embedme -g
 
 # copy files. 
-COPY . .
+COPY src/entrypoint.sh entrypoint.sh
 
 # run embedme 
-RUN npx embedme $FILES
-
-#
-
-
+ENTRYPOINT ["./src/entrypoint.sh"]

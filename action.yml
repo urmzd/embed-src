@@ -1,11 +1,10 @@
-name: "EmbedMd"
+name: "embedmd"
 description: "A GitHub Action for the `embedme` node package."
 inputs:
   markdown-files:
     description: "The files where code should be embedded."
     required: false
-    default: 
-      - README.md
+    default: "README.md"
   commit-message: 
     description: "The message to associate with the commit containing the modified markdown files." 
     required: false
@@ -14,6 +13,6 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
+    - '${{ inputs.commit-message }}'
     - "${{ inputs.markdown-files }}"
-    - "${{ inputs.commit-message }}"
 
