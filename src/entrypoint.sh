@@ -13,3 +13,4 @@ git config user.email "embed-md-bot@urmzd.com"
 
 git add "$FILES"
 git commit -m "$COMMIT_MESSAGE"
+git push
