@@ -1,5 +1,8 @@
 name: "embed-md"
 description: "A GitHub Action for the `embedme` node package."
+branding:
+  icon: "code"
+  color: "gray-dark"
 inputs:
   markdown-files:
     description: "The files where code should be embedded."
