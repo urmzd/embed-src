@@ -1,8 +1,10 @@
-name: "Release"
+name: "CI"
 
 on: 
-  release:
-    types: [released]
+  push:
+    paths:
+      - "examples/**"
+      - "README.md"
 
 jobs:
   embed-example:
