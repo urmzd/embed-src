@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: "Checkout current repo"
         uses: actions/checkout@v3
-      - name: "Run entrypoint script."
+      - name: "Run action"
         uses: ./
         id: "embed-code" 
         with:
