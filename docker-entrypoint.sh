@@ -6,7 +6,7 @@ FILES="${@:2}"
 # Configure git
 git config user.name "embed-md bot"
 git config user.email "embed-md-bot@urmzd.com"
-git config --add safe.directory "$(git rev-parse --show-toplevel)"
+git config --add safe.directory /github/workspace
 git config pull.rebase true
 git config rebase.autoStash true
 
