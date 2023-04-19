@@ -5,6 +5,7 @@ on:
     types: [opened, edited]
   push:
     paths:
+      - "docker-entrypoint.sh"
       - ".github/workflows/ci.yml"
       - "examples/**"
       - "README.md"
