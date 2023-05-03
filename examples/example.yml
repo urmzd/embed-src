@@ -9,7 +9,8 @@ jobs:
       - name: "Checkout current repo"
         uses: actions/checkout@v3
       - name: "Run entrypoint script."
-        uses: urmzd/embed-md@v1.0.2
+        # we're going to be replacing the latest tag variable with the true version.
+        uses: urmzd/embed-md@{{latest_tag}}
         id: "embed-code"
         with:
           markdown-files: "README.md"

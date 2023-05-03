@@ -1,24 +1,19 @@
-name: "CI"
+name: "Integration"
 
 on: 
   pull_request:
     types: [opened, edited]
-  push:
-    paths:
-      - "docker-entrypoint.sh"
-      - ".github/workflows/ci.yml"
-      - "examples/**"
-      - "README.md"
 
 jobs:
-  embed-example:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout current repo"
         uses: actions/checkout@v3
-      - name: "Run action"
-        uses: urmzd/embed-md@v1.0.2
-        id: "embed-code" 
-        with:
-          markdown-files: "README.md" 
-          commit-message: "chore: embed example using self"
+      - name: "Build docker image"
+        run: "docker build -t urmzd/embed-md:{{version}} ."
+      - name: "Run file"
+        run: "(docker run urmzd/embed-md:{{version}} README.md description) >> output.log"
+      - name: "Verify information"
+        run: "diff output.log examples/test-output.log"
+
