@@ -1,11 +1,15 @@
 name: "Deployment"
 
 on:
-  push
+  # merge to master
+  push:
+    branches:
+      - main
 
+# promote the latest version
 jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: "family"
-        run: "hello"
+      - run: |
+          echo the PR was merged

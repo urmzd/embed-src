@@ -14,7 +14,7 @@ inputs:
     default: "chore: embed code within markdown files"
 runs:
   using: 'docker'
-  image: 'urmzd/embed-me:{{version}}'
+  image: 'urmzd/embed-me:{{$VERSION}}'
   args:
     - '${{ inputs.commit-message }}'
     - "${{ inputs.markdown-files }}"
