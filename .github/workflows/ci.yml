@@ -3,6 +3,9 @@ name: "Integration"
 on: 
   pull_request:
     types: [opened, edited]
+  push:
+    branches:
+      - 'hotfix/**'
 
 jobs:
   test:
