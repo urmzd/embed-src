@@ -51,3 +51,12 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: "Push docker image"
         run: docker push "urmzd/embed-md:${VERSION}"
+      - name: "Update package version"
+        run: |
+          # We force the version update since directory is dirty
+          npm version -f "${VERSION}"
+      - name: "Push changes"
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git push origin HEAD:${GITHUB_REF#refs/heads/}
