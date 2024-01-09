@@ -38,7 +38,7 @@ jobs:
       - name: "Assert changes on examples/example.md"
         run: |
           # assert exit code is 1
-          git diff --exit-code examples/example.md
+          git diff examples/example.md
 
           if [ $? -eq 1 ]; then
             echo "examples/example.md has been modified"
