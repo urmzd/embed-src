@@ -37,13 +37,10 @@ jobs:
             "urmzd/embed-md:${VERSION}"
       - name: "Assert changes on examples/example.md"
         run: |
-          # assert exit code is 1
-          git diff examples/example.md
-
-          if [ $? -eq 1 ]; then
+          if [[ `git diff --exit-code examples/example.md` ]]; then
             echo "examples/example.md has been modified"
             exit 0
           else
             echo "examples/example.md has not been modified"
             exit 1
-          fi
+          fi  
