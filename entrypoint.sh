@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-# Variables:
-# 	COMMIT_MESSAGE
-# 	COMMIT_AUTHOR
-# 	PUSH
-# 	MARKDOWN_FILES
+# Inputs.
+COMMIT_MESSAGE="${COMMIT_MESSAGE:-"Embed files"}"
+COMMIT_AUTHOR="${COMMIT_AUTHOR:-"GitHub Actions <noreply@github.com>"}"
+PUSH="${PUSH:-"false"}"
+MARKDOWN_FILES="${MARKDOWN_FILES:-"README.md"}"
 
 commit_changes() {
   git add "${MARKDOWN_FILES[@]}"
