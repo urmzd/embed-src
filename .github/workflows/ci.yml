@@ -56,8 +56,9 @@ jobs:
         run: |
           # We force the version update since directory is dirty
           npm version -f "${VERSION}"
-      - name: "Push changes"
+      - name: "Push version changes"
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+          git commit -m "chore: update version to ${VERSION}"
           git push origin HEAD:${GITHUB_REF#refs/heads/}
