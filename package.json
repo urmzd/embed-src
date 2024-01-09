@@ -1,6 +1,6 @@
 {
   "name": "embed-md",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "GitHub action to embed code within markdown files.",
   "main": ".",
   "directories": {
@@ -16,6 +16,5 @@
     "semantic-release": "^22.0.5",
     "@semantic-release/exec": "^6.0.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
