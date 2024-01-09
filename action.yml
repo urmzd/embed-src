@@ -23,8 +23,8 @@ inputs:
     default: "true"
 runs:
   using: "docker"
-  # TODO: replace {{version}} with the version merged into main
-  image: "urmzd/embed-me:{{version}}"
+    # TODO: Replace the capture group found in urmzd/embed-me:(.*) with the version merged into main.
+  image: "urmzd/embed-me:1.0.3"
   env:
     COMMIT_AUTHOR: "${{ inputs.commit-author }}"
     COMMIT_MESSAGE: "${{ inputs.commit-message }}"

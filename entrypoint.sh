@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
-# COMMIT_MESSAGE
-# COMMIT_AUTHOR
-# PUSH
-# MARKDOWN_FILES
+# Variables:
+# 	COMMIT_MESSAGE
+# 	COMMIT_AUTHOR
+# 	PUSH
+# 	MARKDOWN_FILES
 
 commit_changes() {
-  git add .
-  git commit -m "$1"
-  git push
+  git add "${MARKDOWN_FILES[@]}"
+  git commit -m "$COMMIT_MESSAGE" --author="$COMMIT_AUTHOR"
 }
 
 embed_files() {
-  npx embedme "$@"
+  npx embedme "${MARKDOWN_FILES[@]}"
 }
 
 push_changes() {
@@ -20,5 +20,8 @@ push_changes() {
 }
 
 embed_files
-commit_changes "$1"
-push_changes
+commit_changes
+
+if [[ "$PUSH" == "true" ]]; then
+  push_changes
+fi
