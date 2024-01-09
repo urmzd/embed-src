@@ -52,6 +52,7 @@ jobs:
       - name: "Push docker image"
         run: docker push "urmzd/embed-md:${VERSION}"
       - name: "Update package version"
+        continue-on-error: true
         run: |
           # We force the version update since directory is dirty
           npm version -f "${VERSION}"
