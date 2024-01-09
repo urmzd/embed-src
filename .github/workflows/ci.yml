@@ -64,6 +64,6 @@ jobs:
         run: git add package.json package-lock.json
       - name: "Commit version changes"
         run: >-
-          git diff-index --quiet HEAD || git commit -m "chore: update version to ${VERSION}"
+          git diff --staged --quiet || git commit -m "chore: update version to ${VERSION}"
       - name: "Push version changes"
         run: git push origin HEAD:${GITHUB_REF#refs/heads/}
