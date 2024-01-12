@@ -1,6 +1,6 @@
 {
   "name": "embed-md",
-  "version": "1.1.0",
+  "version": "1.2.2",
   "description": "GitHub action to embed code within markdown files.",
   "private": true,
   "main": ".",
