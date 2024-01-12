@@ -14,5 +14,6 @@ jobs:
         with:
           markdown-files: "README.md"
           commit-message: "chore: embed example using self"
-          commit-author: "Urmzd Mukhammadnaim <urmzd@noreply.com>"
+          commit-name: Urmzd Mukhammadnaim
+          commit-email: <urmzd@noreply.com>
           commit-push: "false"

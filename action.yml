@@ -12,6 +12,10 @@ inputs:
     description: "The message to associate with the commit containing the modified markdown files."
     required: false
     default: "chore: embed code within markdown files"
+  commit-name:
+    description: "Define the name of the commit."
+    required: false
+    default: "github-actions[bot]"
   commit-author:
     description: "Define the author of the commit."
     required: false
@@ -24,7 +28,8 @@ runs:
   using: "docker"
   image: urmzd/embed-md:1.2.3
   env:
-    COMMIT_AUTHOR: "${{ inputs.commit-author }}"
+    COMMIT_NAME: "${{ inputs.commit-name }}"
+    COMMIT_EMAIL: "${{ inputs.commit-email }}"
     COMMIT_MESSAGE: "${{ inputs.commit-message }}"
     COMMIT_PUSH: "${{ inputs.commit-push }}"
     MARKDOWN_FILES: "${{ inputs.markdown-files }}"
