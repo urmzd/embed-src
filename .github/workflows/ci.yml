@@ -27,16 +27,14 @@ jobs:
         run: "npm ci"
       - name: "Update version"
         run: "npx semantic-release -d"
-      - name: "Build docker image"
-        run: docker build -t "urmzd/embed-md:${VERSION}" .
       - name: "Run action"
-        run: |
-          docker run -v "$(pwd):/app" \
-            -e COMMIT_MESSAGE="chore: this is an example commit message" \
-            -e MARKDOWN_FILES="examples/example.md" \
-            -e PUSH="false" \
-            -e COMMIT_AUTHOR="github-actions[bot] <github-actions[bot]@users.noreply.github.com>" \
-            "urmzd/embed-md:${VERSION}"
+        run: ./
+        id: action
+        with:
+          commit-message: "chore: this is an example commit message"
+          markdown-files: "examples/example.md"
+          push: "false"
+          commit-author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
       - name: "Assert changes on examples/example.md"
         run: |
           if [[ `git diff --exit-code examples/example.md` ]]; then
