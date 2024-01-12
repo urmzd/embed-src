@@ -25,13 +25,11 @@ jobs:
       - name: Run commit analyzer
         run: npx semantic-release -d
       - name: Run action on self
-        run: |
-          docker run -v "$(pwd):/app" \
-            -e COMMIT_MESSAGE="chore: this is an example commit message" \
-            -e MARKDOWN_FILES="README.md" \
-            -e PUSH="false" \
-            -e COMMIT_AUTHOR="github-actions[bot] <github-actions[bot]@users.noreply.github.com>" \
-            "urmzd/embed-md:${VERSION}"
+        uses: ./
+        with:
+          commit-message: "chore(release): ${VERSION}"
+          markdown-files: "README.md"
+          push: "false"
       - name: "Update references"
         run: ./scripts/update_version_refs.sh
       - name: "Update npm version"
