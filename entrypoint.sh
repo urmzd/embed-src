@@ -29,7 +29,7 @@ main () {
 
   _stage_changes
 
-  if [[ "$COMMIT_DRY" == "false"]]; then
+  if [[ "$COMMIT_DRY" == "false" ]]; then
     _commit_changes
   fi
 
