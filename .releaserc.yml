@@ -1,4 +1,4 @@
-branches: 
+branches:
   - main
   - hotfix/*
   - feature/*
@@ -12,7 +12,14 @@ plugins:
           release: "patch"
   - "@semantic-release/release-notes-generator"
   - - "@semantic-release/exec"
-    - verifyReleaseCmd: |
+    - prepareCmd: |
+        export CURRENT_VERSION=$(node -p "require('./package.json').version")
+        if [ -n "$GITHUB_ENV" ]; then
+            echo "VERSION=$CURRENT_VERSION" >> "$GITHUB_ENV"
+        else
+            export VERSION=$CURRENT_VERSION
+        fi
+      verifyReleaseCmd: |
         export VERSION="${nextRelease.version}"
 
         if [ -n "$GITHUB_ENV" ]; then
