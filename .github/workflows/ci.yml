@@ -29,27 +29,16 @@ jobs:
     name: Integration
     needs: [lint, test]
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-
       - uses: dtolnay/rust-toolchain@stable
-
       - uses: Swatinem/rust-cache@v2
 
       - name: Build embed-md
         run: cargo build --release
 
-      - name: Install embed-md
-        run: cp target/release/embed-md /usr/local/bin/
-
-      - name: Run action on example
-        uses: ./
-        with:
-          markdown-files: "examples/example.md"
-          commit-dry: "true"
-          commit-push: "false"
+      - name: Run embed-md on example
+        run: ./target/release/embed-md examples/example.md
 
       - name: Assert changes
         run: |
