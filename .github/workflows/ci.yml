@@ -40,11 +40,11 @@ jobs:
       - name: Run embed-md on example
         run: ./target/release/embed-md examples/example.md
 
-      - name: Assert changes
+      - name: Assert no drift
         run: |
           if git diff --exit-code examples/example.md; then
-            echo "examples/example.md has not been modified"
-            exit 1
+            echo "examples/example.md is up-to-date"
           else
-            echo "examples/example.md has been modified"
+            echo "examples/example.md is out of date — run embed-md and commit the result"
+            exit 1
           fi
