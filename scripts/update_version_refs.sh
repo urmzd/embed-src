@@ -8,7 +8,7 @@ fi
 
 FILES_TO_UPDATE=(
     "action.yml"
-    "examples/example.yml"
+    "example.yml"
 )
 
 for file in "${FILES_TO_UPDATE[@]}"; do

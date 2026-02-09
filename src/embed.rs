@@ -56,9 +56,36 @@ pub fn process_content(content: &str, base_dir: &Path) -> String {
     let mut result = Vec::new();
     let mut i = 0;
     let has_trailing_newline = content.ends_with('\n');
+    let mut in_fence = false;
+    let mut fence_len: usize = 0;
 
     while i < lines.len() {
         let line = lines[i];
+
+        // Track backtick-fenced code blocks so directives inside them are skipped.
+        let trimmed = line.trim_start();
+        if trimmed.starts_with("```") {
+            let backtick_count = trimmed.bytes().take_while(|&b| b == b'`').count();
+            if !in_fence {
+                in_fence = true;
+                fence_len = backtick_count;
+                result.push(line.to_string());
+                i += 1;
+                continue;
+            } else if backtick_count >= fence_len {
+                in_fence = false;
+                fence_len = 0;
+                result.push(line.to_string());
+                i += 1;
+                continue;
+            }
+        }
+
+        if in_fence {
+            result.push(line.to_string());
+            i += 1;
+            continue;
+        }
 
         if let Some(cap) = open_re.captures(line) {
             let src_path = cap[1].to_string();

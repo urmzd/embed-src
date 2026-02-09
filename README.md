@@ -149,7 +149,7 @@ embed-it --dry-run README.md
 ## Troubleshooting
 
 **Action fails with "nothing to commit"**
-This means no changes were needed. Ensure your files contain valid `embed-it src="..."` opening markers with corresponding `/embed-it` closing markers.
+This means no changes were needed. Ensure your files contain valid `embed-it` markers with `src="..."` and corresponding `/embed-it` closing markers.
 
 **Permission denied on push**
 The action needs `contents: write` permission. Add this to your job:

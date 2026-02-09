@@ -306,3 +306,46 @@ fn non_markdown_host_file_slash_comments() {
     );
     assert!(result.contains("fn main()"));
 }
+
+#[test]
+fn fenced_code_block_skipped() {
+    let input = "\
+# Header
+
+```markdown
+<!-- embed-it src=\"example.rs\" fence=\"auto\" -->
+<!-- /embed-it -->
+```
+
+Done.
+";
+    let result = process_content(input, fixtures_dir());
+    // The directive is inside a fenced code block, so it should be left unchanged.
+    assert_eq!(result, input);
+}
+
+#[test]
+fn fenced_code_block_then_real_directive() {
+    let input = "\
+# Header
+
+```markdown
+<!-- embed-it src=\"example.rs\" fence=\"auto\" -->
+<!-- /embed-it -->
+```
+
+<!-- embed-it src=\"example.rs\" fence=\"auto\" -->
+<!-- /embed-it -->
+";
+    let result = process_content(input, fixtures_dir());
+    // The directive inside the fence should be untouched.
+    assert!(
+        result.contains("```markdown\n<!-- embed-it src=\"example.rs\" fence=\"auto\" -->\n<!-- /embed-it -->\n```"),
+        "fenced directive should be unchanged"
+    );
+    // The real directive after the fence should be processed.
+    assert!(
+        result.contains("```rust\nfn main()"),
+        "real directive should be embedded"
+    );
+}

@@ -16,4 +16,4 @@ hooks:
     - VERSION=$SR_VERSION ./scripts/update_version_refs.sh
     - cargo build --release
     - ./target/release/embed-it README.md
-    - git add README.md action.yml examples/example.yml
+    - git add README.md action.yml example.yml
