@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.1.0 (2026-02-11)
+
+### Features
+
+- use native artifacts upload, floating tags, and force re-release ([b212637](https://github.com/urmzd/embed-it/commit/b2126376f5b76d4cdc7eb1c1a0e1f1d29207fb3a))
+
+
 ## 2.0.0 (2026-02-09)
 
 ### Breaking Changes
