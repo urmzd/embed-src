@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.4 (2026-02-22)
+
+### Miscellaneous
+
+- remove MIT license to resolve dual-license conflict ([846b5a0](https://github.com/urmzd/embed-it/commit/846b5a0cc777f6bc2f16a783d6fa770ae5a320b8))
+- split release and build workflows ([8aa03ab](https://github.com/urmzd/embed-it/commit/8aa03abc5be2279899d8685eb5c3cd7987fa69f5))
+
+
 ## 2.1.3 (2026-02-22)
 
 ### Miscellaneous
