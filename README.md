@@ -75,6 +75,49 @@ server:
 - **Dry-Run Mode**: Test embedding without creating commits.
 - **Seamless Integration**: Drop into any GitHub Actions workflow.
 
+## Installation
+
+### Script (macOS / Linux)
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/urmzd/embed-src/main/install.sh | sh
+```
+
+Installs the latest release to `$HOME/.local/bin` and adds it to your shell's `PATH`.
+
+**Options (environment variables):**
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `EMBED_SRC_VERSION` | Version to install (e.g. `v3.1.1`) | latest |
+| `EMBED_SRC_INSTALL_DIR` | Installation directory | `$HOME/.local/bin` |
+
+**Example — pin a version:**
+```sh
+EMBED_SRC_VERSION=v3.1.1 curl -fsSL https://raw.githubusercontent.com/urmzd/embed-src/main/install.sh | sh
+```
+
+### Manual
+
+Download a pre-built binary for your platform from the [releases page](https://github.com/urmzd/embed-src/releases/latest) and place it somewhere on your `PATH`.
+
+> **Windows** — the script installer is not supported; use the manual download above.
+
+## Local Usage
+
+The `embed-src` binary can also be used directly:
+
+```bash
+# Process files in place
+embed-src README.md docs/*.md
+
+# Check if files are up-to-date (CI mode)
+embed-src --verify README.md
+
+# Preview changes without writing
+embed-src --dry-run README.md
+```
+
 ## Inputs
 
 | Name | Description | Required | Default |
@@ -129,21 +172,6 @@ Useful for CI validation -- embed the files and check for drift without committi
   with:
     commit-dry: "true"
     commit-push: "false"
-```
-
-### CLI Usage
-
-The `embed-src` binary can also be used directly:
-
-```bash
-# Process files in place
-embed-src README.md docs/*.md
-
-# Check if files are up-to-date (CI mode)
-embed-src --verify README.md
-
-# Preview changes without writing
-embed-src --dry-run README.md
 ```
 
 ## Troubleshooting
