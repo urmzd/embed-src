@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.1 (2026-02-25)
+
+### Bug Fixes
+
+- trigger binary builds from release workflow ([7f1d21f](https://github.com/urmzd/embed-src/commit/7f1d21f1243332e09462a58eb20aa84a0adf3f6f))
+
+
 ## 3.1.0 (2026-02-25)
 
 ### Features
