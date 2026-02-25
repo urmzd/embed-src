@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.1.0 (2026-02-25)
+
+### Features
+
+- add install script and switch Linux builds to musl ([0f9a160](https://github.com/urmzd/embed-src/commit/0f9a160d5774580d74a1522115de985b6f6ed977))
+
+### Bug Fixes
+
+- correct linux binary target and shellcheck warnings ([1622fc8](https://github.com/urmzd/embed-src/commit/1622fc875da2116bc2e77bd8141d921e37b499ef))
+
+
 ## 3.0.0 (2026-02-22)
 
 ### Breaking Changes
