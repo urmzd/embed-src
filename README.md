@@ -1,6 +1,19 @@
-# Embed Src
+<p align="center">
+  <h1 align="center">embed-src</h1>
+  <p align="center">
+    Embed source files into any text file using comment markers.
+    <br /><br />
+    <a href="https://github.com/urmzd/embed-src/releases">Download</a>
+    &middot;
+    <a href="https://github.com/urmzd/embed-src/issues">Report Bug</a>
+    &middot;
+    <a href="https://github.com/urmzd/embed-src/blob/main/action.yml">GitHub Action</a>
+  </p>
+</p>
 
-Embed source files into **any text file** using comment markers. Works with markdown, YAML, Python, Rust, shell scripts, and any file that supports comments.
+<p align="center">
+  <a href="https://github.com/urmzd/embed-src/actions/workflows/ci.yml"><img src="https://github.com/urmzd/embed-src/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+</p>
 
 ## Syntax
 
