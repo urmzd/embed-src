@@ -117,6 +117,7 @@ jobs:
 
     outputs:
       released: ${{ steps.sr.outputs.released }}
+      tag: ${{ steps.sr.outputs.tag }}
 
   publish:
     needs: release
@@ -127,6 +128,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.release.outputs.tag }}
 
       - uses: dtolnay/rust-toolchain@stable
 
