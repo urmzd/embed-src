@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.1 (2026-03-16)
+
+### Bug Fixes
+
+- **ci**: checkout release tag in publish job ([9fc148e](https://github.com/urmzd/embed-src/commit/9fc148ece12fab1f437c8b88b48667c37f019dc0))
+
+[Full Changelog](https://github.com/urmzd/embed-src/compare/v3.2.0...v3.2.1)
+
+
 ## 3.2.0 (2026-03-16)
 
 ### Features
