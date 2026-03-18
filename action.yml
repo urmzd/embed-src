@@ -68,8 +68,11 @@ runs:
         BINARY_NAME="embed-src-${TARGET}"
         DOWNLOAD_URL="https://github.com/urmzd/embed-src/releases/latest/download/${BINARY_NAME}"
 
-        curl -sSfL "$DOWNLOAD_URL" -o /usr/local/bin/embed-src
-        chmod +x /usr/local/bin/embed-src
+        INSTALL_DIR="$HOME/.local/bin"
+        mkdir -p "$INSTALL_DIR"
+        curl -sSfL "$DOWNLOAD_URL" -o "$INSTALL_DIR/embed-src"
+        chmod +x "$INSTALL_DIR/embed-src"
+        echo "$INSTALL_DIR" >> "$GITHUB_PATH"
 
     - name: Run embed-src
       shell: bash
