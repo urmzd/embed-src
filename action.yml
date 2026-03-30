@@ -48,6 +48,8 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
+        ES_REPO: ${{ github.action_repository }}
+        ES_REF: ${{ github.action_ref }}
       run: |
         set -euo pipefail
 
@@ -67,15 +69,7 @@ runs:
         esac
 
         BINARY_NAME="embed-src-${TARGET}"
-        # Derive the major version tag from this action's ref (e.g. v3.4.0 -> v3)
-        # Falls back to "latest" if the ref isn't a semver tag.
-        ACTION_REF="${GITHUB_ACTION_REF:-latest}"
-        if [[ "$ACTION_REF" =~ ^v([0-9]+) ]]; then
-          FLOAT_TAG="v${BASH_REMATCH[1]}"
-        else
-          FLOAT_TAG="latest"
-        fi
-        DOWNLOAD_URL="https://github.com/urmzd/embed-src/releases/download/${FLOAT_TAG}/${BINARY_NAME}"
+        DOWNLOAD_URL="https://github.com/${ES_REPO}/releases/download/${ES_REF}/${BINARY_NAME}"
 
         INSTALL_DIR="$HOME/.local/bin"
         mkdir -p "$INSTALL_DIR"
