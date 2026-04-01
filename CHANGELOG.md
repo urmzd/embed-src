@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.5.1 (2026-04-01)
+
+### Bug Fixes
+
+- **action**: handle floating tag resolution under pipefail ([d3e0662](https://github.com/urmzd/embed-src/commit/d3e06620ec404f8aac104de71111934b086f5c4b))
+- **action**: remove auth from release API calls for cross-repo compatibility ([ce8fe5b](https://github.com/urmzd/embed-src/commit/ce8fe5b031142ec2e38a794df0b9167b328faae2))
+
+### Refactoring
+
+- normalize action.yml with floating tag resolution and consistent metadata ([d912caa](https://github.com/urmzd/embed-src/commit/d912caa3a0706197e55e8c1dae8d35adec58b38d))
+
+### Miscellaneous
+
+- add diagnostic logging to action.yml ([c61186f](https://github.com/urmzd/embed-src/commit/c61186fb6c518a87767ff2f5666af0f4c9c16554))
+
+[Full Changelog](https://github.com/urmzd/embed-src/compare/v3.5.0...v3.5.1)
+
+
 ## 3.5.0 (2026-03-30)
 
 ### Features
