@@ -35,8 +35,12 @@ runs:
     - name: Configure git identity
       shell: bash
       run: |
+        echo "::group::Configure git identity"
+        echo "Setting user.name=${{ inputs.commit-name }}"
         git config user.name "${{ inputs.commit-name }}"
+        echo "Setting user.email=${{ inputs.commit-email }}"
         git config user.email "${{ inputs.commit-email }}"
+        echo "::endgroup::"
 
     - name: Download embed-src binary
       shell: bash
@@ -46,28 +50,32 @@ runs:
         ES_REF: ${{ github.action_ref }}
       run: |
         set -euo pipefail
+        echo "::group::Download embed-src binary"
 
         OS=$(uname -s | tr '[:upper:]' '[:lower:]')
         ARCH=$(uname -m)
+        echo "Detected OS=$OS ARCH=$ARCH"
         case "$ARCH" in
           x86_64)        ARCH="x86_64" ;;
           aarch64|arm64) ARCH="aarch64" ;;
-          *) echo "Unsupported architecture: $ARCH" >&2; exit 1 ;;
+          *) echo "::error::Unsupported architecture: $ARCH"; exit 1 ;;
         esac
         case "$OS" in
           linux)  TARGET="${ARCH}-unknown-linux-musl" ;;
           darwin) TARGET="${ARCH}-apple-darwin" ;;
-          *) echo "Unsupported OS: $OS" >&2; exit 1 ;;
+          *) echo "::error::Unsupported OS: $OS"; exit 1 ;;
         esac
 
         BINARY_NAME="embed-src-${TARGET}"
         DEST="$HOME/.local/bin/embed-src"
         mkdir -p "$HOME/.local/bin"
+        echo "Target=$TARGET Binary=$BINARY_NAME"
 
         # Resolve the action ref to a concrete release tag.
         # Floating tags (e.g. v1) are git tags with no release attached; exact
         # version tags (e.g. v1.2.3) have a release with binary assets.
         API="https://api.github.com/repos/${ES_REPO}"
+        echo "Resolving ref=${ES_REF} via ${API}"
 
         RELEASE_TAG=$(curl -fsSL \
           -H "Authorization: token $GH_TOKEN" \
@@ -77,48 +85,71 @@ runs:
           | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
 
         if [ -z "$RELEASE_TAG" ]; then
+          echo "No exact release for ref=${ES_REF}, searching by major version..."
           RELEASES=$(curl -fsSL \
             -H "Authorization: token $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             "${API}/releases?per_page=20")
           MAJOR=$(echo "$ES_REF" | grep -oE '^v[0-9]+')
           if [ -n "$MAJOR" ]; then
+            echo "Matching major version prefix: ${MAJOR}"
             RELEASE_TAG=$(echo "$RELEASES" | grep '"tag_name"' \
               | grep "\"${MAJOR}\." | head -1 \
               | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
           fi
           if [ -z "$RELEASE_TAG" ]; then
+            echo "Falling back to latest release"
             RELEASE_TAG=$(echo "$RELEASES" | grep '"tag_name"' | head -1 \
               | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')
           fi
         fi
 
         if [ -z "$RELEASE_TAG" ]; then
-          echo "Could not resolve ref '${ES_REF}' to a release tag" >&2
+          echo "::error::Could not resolve ref '${ES_REF}' to a release tag"
           exit 1
         fi
 
+        echo "Resolved release tag: ${RELEASE_TAG}"
         URL="https://github.com/${ES_REPO}/releases/download/${RELEASE_TAG}/${BINARY_NAME}"
+        echo "Downloading from ${URL}"
         curl -fsSL -H "Authorization: token $GH_TOKEN" "$URL" -o "$DEST"
         chmod +x "$DEST"
         echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+        echo "embed-src binary installed to ${DEST}"
+        echo "::endgroup::"
 
     - name: Run embed-src
       shell: bash
       run: |
+        echo "::group::Run embed-src"
+        echo "Processing files: ${{ inputs.files }}"
         # shellcheck disable=SC2086
         embed-src ${{ inputs.files }}
+        echo "::endgroup::"
 
     - name: Stage, commit, and push
       shell: bash
       run: |
+        echo "::group::Stage, commit, and push"
+        echo "Staging files: ${{ inputs.files }}"
         # shellcheck disable=SC2086
         git add ${{ inputs.files }}
 
         if [ "${{ inputs.commit-dry }}" = "false" ]; then
-          git diff --staged --quiet || git commit -m "${{ inputs.commit-message }}"
+          if git diff --staged --quiet; then
+            echo "::notice::No changes to commit"
+          else
+            echo "Committing with message: ${{ inputs.commit-message }}"
+            git commit -m "${{ inputs.commit-message }}"
+          fi
+        else
+          echo "Dry run — skipping commit"
         fi
 
         if [ "${{ inputs.commit-push }}" = "true" ]; then
+          echo "Pushing to remote"
           git push
+        else
+          echo "Push disabled — skipping"
         fi
+        echo "::endgroup::"
