@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.5.2 (2026-04-02)
+
+### Bug Fixes
+
+- authenticate API curl requests for cross-org support ([87167f1](https://github.com/urmzd/embed-src/commit/87167f16b90434dc3462a464267d0296cd4ec5ed))
+
+[Full Changelog](https://github.com/urmzd/embed-src/compare/v3.5.1...v3.5.2)
+
+
 ## 3.5.1 (2026-04-01)
 
 ### Bug Fixes
