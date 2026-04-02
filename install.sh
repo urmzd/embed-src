@@ -12,6 +12,16 @@ set -eu
 
 REPO="urmzd/embed-src"
 
+# curl with optional auth — uses GH_TOKEN or GITHUB_TOKEN if set.
+gh_curl() {
+    token="${GH_TOKEN:-${GITHUB_TOKEN:-}}"
+    if [ -n "$token" ]; then
+        curl -fsSL -H "Authorization: token $token" "$@"
+    else
+        curl -fsSL "$@"
+    fi
+}
+
 main() {
     os=$(uname -s)
     arch=$(uname -m)
@@ -42,7 +52,7 @@ main() {
     if [ -n "${EMBED_SRC_VERSION:-}" ]; then
         tag="$EMBED_SRC_VERSION"
     else
-        tag=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
+        tag=$(gh_curl "https://api.github.com/repos/$REPO/releases/latest" \
             | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')
         if [ -z "$tag" ]; then
             err "Failed to fetch latest release tag"
@@ -56,7 +66,7 @@ main() {
     mkdir -p "$install_dir"
 
     echo "Downloading embed-src $tag for $target..."
-    curl -fsSL "$url" -o "$install_dir/embed-src"
+    gh_curl "$url" -o "$install_dir/embed-src"
     chmod +x "$install_dir/embed-src"
 
     echo "Installed embed-src to $install_dir/embed-src"
