@@ -4,7 +4,7 @@ init:
     rustup component add clippy rustfmt
 
 install:
-    cargo build --release
+  cargo install --path . --locked --force
 
 build:
     cargo build
