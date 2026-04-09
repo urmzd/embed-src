@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.6.1 (2026-04-09)
+
+### Bug Fixes
+
+- **ci**: remove --allow-dirty from cargo publish ([f49f366](https://github.com/urmzd/embed-src/commit/f49f366b1ca80a8aa59195331ff6b40a25d24f40))
+
+[Full Changelog](https://github.com/urmzd/embed-src/compare/v3.6.0...v3.6.1)
+
+
 ## 3.6.0 (2026-04-09)
 
 ### Features
