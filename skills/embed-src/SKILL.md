@@ -15,9 +15,9 @@ Embed source files into documents using `embed-src`.
    - Opening: `<!-- embed-src src="path/to/file" -->` (or any comment style)
    - Closing: `<!-- /embed-src -->`
    - Optional: add `fence` or `fence="auto"` for code-fenced output
-2. Run: `embed-src $ARGUMENTS` (or `embed-src README.md` if no args)
-3. To check if files are up-to-date (CI): `embed-src --verify <files>`
-4. To preview changes: `embed-src --dry-run <files>`
+2. Run: `embed-src run $ARGUMENTS` (or `embed-src run README.md` if no args)
+3. To check if files are up-to-date (CI): `embed-src run --verify <files>`
+4. To preview changes: `embed-src run --dry-run <files>`
 
 ## Marker Syntax
 

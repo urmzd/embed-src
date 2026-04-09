@@ -136,13 +136,13 @@ The `embed-src` binary can also be used directly:
 
 ```bash
 # Process files in place
-embed-src README.md docs/*.md
+embed-src run README.md docs/*.md
 
 # Check if files are up-to-date (CI mode)
-embed-src --verify README.md
+embed-src run --verify README.md
 
 # Preview changes without writing
-embed-src --dry-run README.md
+embed-src run --dry-run README.md
 ```
 
 ## Inputs

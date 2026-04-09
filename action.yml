@@ -99,7 +99,7 @@ runs:
         echo "::group::Run embed-src"
         echo "Processing files: ${{ inputs.files }}"
         # shellcheck disable=SC2086
-        embed-src ${{ inputs.files }}
+        embed-src run ${{ inputs.files }}
         echo "::endgroup::"
 
     - name: Stage, commit, and push
