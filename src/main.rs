@@ -1,7 +1,7 @@
 use std::path::Path;
 use std::process;
 
-use clap::Parser;
+use clap::{Parser, Subcommand};
 
 use embed_src::embed::process_file;
 use embed_src::ui;
@@ -9,8 +9,13 @@ use embed_src::ui;
 #[derive(Parser)]
 #[command(name = "embed-src", about = "Embed source files into any text file")]
 struct Cli {
+    #[command(subcommand)]
+    command: Command,
+}
+
+#[derive(clap::Args)]
+struct RunArgs {
     /// Files to process
-    #[arg(required = true)]
     files: Vec<String>,
 
     /// Check if files are up-to-date (exit 1 if changes needed)
@@ -26,18 +31,63 @@ struct Cli {
     output: Option<String>,
 }
 
+#[derive(Subcommand)]
+enum Command {
+    /// Embed source files into text files
+    Run(RunArgs),
+    /// Update embed-src to the latest release
+    Update,
+    /// Print version
+    Version,
+}
+
 fn main() {
     let cli = Cli::parse();
 
-    if cli.output.is_some() && cli.files.len() > 1 {
-        ui::error("--output can only be used with a single input file");
-        process::exit(2);
-    }
+    match cli.command {
+        Command::Run(args) => {
+            if args.files.is_empty() {
+                ui::error("no files specified");
+                process::exit(2);
+            }
 
+            if args.output.is_some() && args.files.len() > 1 {
+                ui::error("--output can only be used with a single input file");
+                process::exit(2);
+            }
+
+            run_embed(&args);
+        }
+        Command::Update => {
+            eprintln!("current version: {}", env!("CARGO_PKG_VERSION"));
+            match agentspec_update::self_update(
+                "urmzd/embed-src",
+                env!("CARGO_PKG_VERSION"),
+                "embed-src",
+            ) {
+                Ok(agentspec_update::UpdateResult::AlreadyUpToDate) => {
+                    eprintln!("already up to date")
+                }
+                Ok(agentspec_update::UpdateResult::Updated { from, to }) => {
+                    eprintln!("updated: {from} → {to}")
+                }
+                Err(e) => {
+                    ui::error(&format!("update failed: {e}"));
+                    process::exit(1);
+                }
+            }
+        }
+        Command::Version => {
+            println!("embed-src {}", env!("CARGO_PKG_VERSION"));
+        }
+    }
+}
+
+fn run_embed(args: &RunArgs) {
     let mut needs_update = false;
     let mut had_error = false;
 
-    for file in &cli.files {
+    for file in &args.files {
         let path = Path::new(file);
 
         let result = match process_file(path) {
@@ -50,7 +100,7 @@ fn main() {
         };
 
         if result.original == result.processed {
-            if !cli.verify && !cli.dry_run {
+            if !args.verify && !args.dry_run {
                 ui::phase_ok(&format!("{} is up to date", file));
             }
             continue;
@@ -58,26 +108,24 @@ fn main() {
 
         needs_update = true;
 
-        if cli.verify {
+        if args.verify {
             ui::warn(&format!("{} is out of date", file));
             continue;
         }
 
-        if cli.dry_run {
+        if args.dry_run {
             ui::info(&format!("{} would be updated", file));
             continue;
         }
 
-        let dest = cli.output.as_deref().unwrap_or(file);
+        let dest = args.output.as_deref().unwrap_or(file);
         if let Err(e) = std::fs::write(dest, &result.processed) {
             ui::error(&format!("writing {}: {}", dest, e));
             had_error = true;
+        } else if dest == file {
+            ui::phase_ok(&format!("{} updated", file));
         } else {
-            if dest == file {
-                ui::phase_ok(&format!("{} updated", file));
-            } else {
-                ui::phase_ok(&format!("{} → {}", file, dest));
-            }
+            ui::phase_ok(&format!("{} → {}", file, dest));
         }
     }
 
@@ -85,7 +133,7 @@ fn main() {
         process::exit(2);
     }
 
-    if cli.verify && needs_update {
+    if args.verify && needs_update {
         process::exit(1);
     }
 }
