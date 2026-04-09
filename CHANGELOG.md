@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.6.0 (2026-04-09)
+
+### Features
+
+- **cli**: add agentspec-update dep; update docs for run subcommand ([4c6ce36](https://github.com/urmzd/embed-src/commit/4c6ce36580dfe028f2be0050d669d000d87e50ed))
+
+### Bug Fixes
+
+- **docs**: update references to use 'run' subcommand ([0598ee9](https://github.com/urmzd/embed-src/commit/0598ee9511c8b9dc8b95825ea0c256e774515372))
+- **ci**: update integration test to use 'run' subcommand ([0ce833f](https://github.com/urmzd/embed-src/commit/0ce833fd4f33c1a486f7d6895240e43aaf0d38b3))
+- **build**: correct install command to use cargo install ([800334f](https://github.com/urmzd/embed-src/commit/800334fcfec6ab05d9b55f70c0317449ea938230))
+
+### Refactoring
+
+- **cli**: replace --self-update flag with update/version subcommands ([a37f2a4](https://github.com/urmzd/embed-src/commit/a37f2a49d8041bd028f819623a5ad212fbbe4f12))
+
+[Full Changelog](https://github.com/urmzd/embed-src/compare/v3.5.4...v3.6.0)
+
+
 ## 3.5.4 (2026-04-06)
 
 ### Bug Fixes
