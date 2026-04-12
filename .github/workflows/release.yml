@@ -120,7 +120,7 @@ jobs:
         run: ./target/release/fsrc run README.md
 
       - name: Stage generated files
-        run: git add README.md action.yml example.yml
+        run: git add README.md action.yml example.yml Cargo.lock
 
       - name: Download artifacts
         uses: actions/download-artifact@v4
