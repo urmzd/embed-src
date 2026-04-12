@@ -426,7 +426,9 @@ fn fenced_code_block_then_real_directive() {
     let result = process_content(input, fixtures_dir());
     // The directive inside the fence should be untouched.
     assert!(
-        result.contains("```markdown\n<!-- fsrc src=\"example.rs\" fence=\"auto\" -->\n<!-- /fsrc -->\n```"),
+        result.contains(
+            "```markdown\n<!-- fsrc src=\"example.rs\" fence=\"auto\" -->\n<!-- /fsrc -->\n```"
+        ),
         "fenced directive should be unchanged"
     );
     // The real directive after the fence should be processed.

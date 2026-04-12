@@ -60,11 +60,7 @@ fn main() {
         }
         Command::Update => {
             eprintln!("current version: {}", env!("CARGO_PKG_VERSION"));
-            match agentspec_update::self_update(
-                "urmzd/fsrc",
-                env!("CARGO_PKG_VERSION"),
-                "fsrc",
-            ) {
+            match agentspec_update::self_update("urmzd/fsrc", env!("CARGO_PKG_VERSION"), "fsrc") {
                 Ok(agentspec_update::UpdateResult::AlreadyUpToDate) => {
                     eprintln!("already up to date")
                 }
