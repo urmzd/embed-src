@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.0.0 (2026-04-12)
+
+### Breaking Changes
+
+- rename embed-src to fsrc ([5f9b60a](https://github.com/urmzd/fsrc/commit/5f9b60ae0e6d7ea5055297a987f127e306c81c93))
+
+### Bug Fixes
+
+- **ci**: fix formatting and skip builds for non-releasable commits ([c2bb504](https://github.com/urmzd/fsrc/commit/c2bb5046cd0213b1f20ee9768d9cf3bae0efd414))
+
+### Miscellaneous
+
+- commit Cargo.lock to fix release pipeline ([fa3d5cf](https://github.com/urmzd/fsrc/commit/fa3d5cff06be19705ff6fe0d4320eddce71bec18))
+
+[Full Changelog](https://github.com/urmzd/fsrc/compare/v3.6.1...v4.0.0)
+
+
 ## 3.6.1 (2026-04-09)
 
 ### Bug Fixes
