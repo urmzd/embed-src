@@ -67,8 +67,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: embed-src-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/embed-src
+          name: fsrc-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/fsrc
 
   release:
     name: Release
@@ -93,11 +93,11 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
       - uses: Swatinem/rust-cache@v2
 
-      - name: Build embed-src
+      - name: Build fsrc
         run: cargo build --release
 
       - name: Update README embeddings
-        run: ./target/release/embed-src run README.md
+        run: ./target/release/fsrc run README.md
 
       - name: Stage generated files
         run: git add README.md action.yml example.yml
@@ -110,9 +110,9 @@ jobs:
       - name: Prepare release assets
         run: |
           mkdir -p release-assets
-          for dir in artifacts/embed-src-*/; do
+          for dir in artifacts/fsrc-*/; do
             target=$(basename "$dir")
-            cp "$dir/embed-src" "release-assets/$target"
+            cp "$dir/fsrc" "release-assets/$target"
             chmod +x "release-assets/$target"
           done
 

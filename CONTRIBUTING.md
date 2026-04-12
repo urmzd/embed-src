@@ -8,8 +8,8 @@
 ## Getting Started
 
 ```bash
-git clone https://github.com/urmzd/embed-src.git
-cd embed-src
+git clone https://github.com/urmzd/fsrc.git
+cd fsrc
 cargo build
 ```
 

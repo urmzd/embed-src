@@ -1,21 +1,21 @@
-# Embed Src
+# fsrc
 
 > A Rust CLI tool that embeds source files into any text file using comment markers. Works with markdown, YAML, Python, Rust, shell scripts, and any file that supports comments. Content between opening and closing markers is replaced with the referenced file's contents, supporting raw insertion or code-fenced output. Ships as a GitHub Action and a standalone binary.
 
 ## Docs
 
-- [README](https://github.com/urmzd/embed-src/blob/main/README.md): Installation, usage, marker syntax, and GitHub Action configuration
-- [AGENTS.md](https://github.com/urmzd/embed-src/blob/main/AGENTS.md): Architecture and development guide
-- [CHANGELOG](https://github.com/urmzd/embed-src/blob/main/CHANGELOG.md): Version history
+- [README](https://github.com/urmzd/fsrc/blob/main/README.md): Installation, usage, marker syntax, and GitHub Action configuration
+- [AGENTS.md](https://github.com/urmzd/fsrc/blob/main/AGENTS.md): Architecture and development guide
+- [CHANGELOG](https://github.com/urmzd/fsrc/blob/main/CHANGELOG.md): Version history
 
 ## API / Key Files
 
-- [src/main.rs](https://github.com/urmzd/embed-src/blob/main/src/main.rs): CLI entry point with --verify and --dry-run flags
-- [src/embed.rs](https://github.com/urmzd/embed-src/blob/main/src/embed.rs): Core processing — finds markers, reads source files, replaces content
-- [src/lang.rs](https://github.com/urmzd/embed-src/blob/main/src/lang.rs): File extension to code fence language mapping
-- [Cargo.toml](https://github.com/urmzd/embed-src/blob/main/Cargo.toml): Package metadata and dependencies
+- [src/main.rs](https://github.com/urmzd/fsrc/blob/main/src/main.rs): CLI entry point with --verify and --dry-run flags
+- [src/embed.rs](https://github.com/urmzd/fsrc/blob/main/src/embed.rs): Core processing — finds markers, reads source files, replaces content
+- [src/lang.rs](https://github.com/urmzd/fsrc/blob/main/src/lang.rs): File extension to code fence language mapping
+- [Cargo.toml](https://github.com/urmzd/fsrc/blob/main/Cargo.toml): Package metadata and dependencies
 
 ## Optional
 
-- [CONTRIBUTING](https://github.com/urmzd/embed-src/blob/main/CONTRIBUTING.md): How to contribute
-- [Skill](https://github.com/urmzd/embed-src/blob/main/skills/embed-src/SKILL.md): Agent skill for embedding source files into documents
+- [CONTRIBUTING](https://github.com/urmzd/fsrc/blob/main/CONTRIBUTING.md): How to contribute
+- [Skill](https://github.com/urmzd/fsrc/blob/main/skills/fsrc/SKILL.md): Agent skill for embedding source files into documents

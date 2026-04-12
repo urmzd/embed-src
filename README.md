@@ -1,19 +1,19 @@
 <p align="center">
-  <h1 align="center">embed-src</h1>
+  <h1 align="center">fsrc</h1>
   <p align="center">
     Embed source files into any text file using comment markers.
     <br /><br />
-    <a href="https://github.com/urmzd/embed-src/releases">Download</a>
+    <a href="https://github.com/urmzd/fsrc/releases">Download</a>
     &middot;
-    <a href="https://github.com/urmzd/embed-src/issues">Report Bug</a>
+    <a href="https://github.com/urmzd/fsrc/issues">Report Bug</a>
     &middot;
-    <a href="https://github.com/urmzd/embed-src/blob/main/action.yml">GitHub Action</a>
+    <a href="https://github.com/urmzd/fsrc/blob/main/action.yml">GitHub Action</a>
   </p>
 </p>
 
 <p align="center">
-  <a href="https://github.com/urmzd/embed-src/actions/workflows/ci.yml"><img src="https://github.com/urmzd/embed-src/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="https://crates.io/crates/embed-src"><img src="https://img.shields.io/crates/v/embed-src" alt="crates.io"></a>
+  <a href="https://github.com/urmzd/fsrc/actions/workflows/ci.yml"><img src="https://github.com/urmzd/fsrc/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://crates.io/crates/fsrc"><img src="https://img.shields.io/crates/v/fsrc" alt="crates.io"></a>
 </p>
 
 ## Showcase
@@ -24,8 +24,8 @@
     <td align="center"><strong>After</strong></td>
   </tr>
   <tr>
-    <td align="center"><img src="showcase/before.png" alt="README with empty embed-src markers" width="400"></td>
-    <td align="center"><img src="showcase/showcase.png" alt="Running embed-src and the result" width="400"></td>
+    <td align="center"><img src="showcase/before.png" alt="README with empty fsrc markers" width="400"></td>
+    <td align="center"><img src="showcase/showcase.png" alt="Running fsrc and the result" width="400"></td>
   </tr>
 </table>
 
@@ -35,32 +35,32 @@ Place opening and closing markers in your file using whatever comment style is a
 
 **Markdown / HTML:**
 ```markdown
-<!-- embed-src src="path/to/config.yml" -->
-<!-- /embed-src -->
+<!-- fsrc src="path/to/config.yml" -->
+<!-- /fsrc -->
 ```
 
 **Rust / JS / Go / C:**
 ```rust
-// embed-src src="path/to/utils.py"
-// /embed-src
+// fsrc src="path/to/utils.py"
+// /fsrc
 ```
 
 **Python / Shell / YAML:**
 ```python
-# embed-src src="path/to/setup.sh"
-# /embed-src
+# fsrc src="path/to/setup.sh"
+# /fsrc
 ```
 
 **CSS:**
 ```css
-/* embed-src src="path/to/theme.css" */
-/* /embed-src */
+/* fsrc src="path/to/theme.css" */
+/* /fsrc */
 ```
 
 **SQL / Lua:**
 ```sql
--- embed-src src="path/to/schema.sql"
--- /embed-src
+-- fsrc src="path/to/schema.sql"
+-- /fsrc
 ```
 
 When the tool runs, the content between the markers is replaced with the referenced file's contents.
@@ -81,13 +81,13 @@ To wrap content in markdown code fences, use the `fence` attribute:
 **Example with fencing:**
 
 ````markdown
-<!-- embed-src src="path/to/config.yml" fence="auto" -->
+<!-- fsrc src="path/to/config.yml" fence="auto" -->
 ```yaml
 server:
   host: localhost
   port: 8080
 ```
-<!-- /embed-src -->
+<!-- /fsrc -->
 ````
 
 - Paths are relative to the host file's directory.
@@ -107,7 +107,7 @@ server:
 ### Script (macOS / Linux)
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/urmzd/embed-src/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/urmzd/fsrc/main/install.sh | sh
 ```
 
 Installs the latest release to `$HOME/.local/bin` and adds it to your shell's `PATH`.
@@ -116,33 +116,33 @@ Installs the latest release to `$HOME/.local/bin` and adds it to your shell's `P
 
 | Variable | Description | Default |
 |----------|-------------|---------|
-| `EMBED_SRC_VERSION` | Version to install (e.g. `v3.1.1`) | latest |
-| `EMBED_SRC_INSTALL_DIR` | Installation directory | `$HOME/.local/bin` |
+| `FSRC_VERSION` | Version to install (e.g. `v3.1.1`) | latest |
+| `FSRC_INSTALL_DIR` | Installation directory | `$HOME/.local/bin` |
 
 **Example — pin a version:**
 ```sh
-EMBED_SRC_VERSION=v3.1.1 curl -fsSL https://raw.githubusercontent.com/urmzd/embed-src/main/install.sh | sh
+FSRC_VERSION=v3.1.1 curl -fsSL https://raw.githubusercontent.com/urmzd/fsrc/main/install.sh | sh
 ```
 
 ### Manual
 
-Download a pre-built binary for your platform from the [releases page](https://github.com/urmzd/embed-src/releases/latest) and place it somewhere on your `PATH`.
+Download a pre-built binary for your platform from the [releases page](https://github.com/urmzd/fsrc/releases/latest) and place it somewhere on your `PATH`.
 
 > **Windows** — the script installer is not supported; use the manual download above.
 
 ## Local Usage
 
-The `embed-src` binary can also be used directly:
+The `fsrc` binary can also be used directly:
 
 ```bash
 # Process files in place
-embed-src run README.md docs/*.md
+fsrc run README.md docs/*.md
 
 # Check if files are up-to-date (CI mode)
-embed-src run --verify README.md
+fsrc run --verify README.md
 
 # Preview changes without writing
-embed-src run --dry-run README.md
+fsrc run --dry-run README.md
 ```
 
 ## Inputs
@@ -161,7 +161,7 @@ embed-src run --dry-run README.md
 
 ### Basic
 
-<!-- embed-src src="example.yml" fence="auto" -->
+<!-- fsrc src="example.yml" fence="auto" -->
 ```yaml
 name: "Example"
 
@@ -176,16 +176,16 @@ jobs:
       - name: "Checkout repo"
         uses: actions/checkout@v4
       - name: "Embed code into files"
-        uses: urmzd/embed-src@v3
+        uses: urmzd/fsrc@v4
         with:
           files: "README.md"
 ```
-<!-- /embed-src -->
+<!-- /fsrc -->
 
 ### Multiple Files
 
 ```yaml
-- uses: urmzd/embed-src@v3
+- uses: urmzd/fsrc@v4
   with:
     files: "README.md docs/API.md docs/GUIDE.md"
 ```
@@ -195,7 +195,7 @@ jobs:
 Useful for CI validation -- embed the files and check for drift without committing:
 
 ```yaml
-- uses: urmzd/embed-src@v3
+- uses: urmzd/fsrc@v4
   with:
     commit-dry: "true"
     commit-push: "false"
@@ -204,7 +204,7 @@ Useful for CI validation -- embed the files and check for drift without committi
 ## Troubleshooting
 
 **Action fails with "nothing to commit"**
-This means no changes were needed. Ensure your files contain valid `embed-src` markers with `src="..."` and corresponding `/embed-src` closing markers.
+This means no changes were needed. Ensure your files contain valid `fsrc` markers with `src="..."` and corresponding `/fsrc` closing markers.
 
 **Permission denied on push**
 The action needs `contents: write` permission. Add this to your job:
@@ -222,8 +222,8 @@ This project ships an [Agent Skill](https://github.com/vercel-labs/skills) for u
 
 Available as portable agent skills in [`skills/`](skills/).
 
-Once installed, use `/embed-src` to embed source files into documents using comment markers.
+Once installed, use `/fsrc` to embed source files into documents using comment markers.
 
 ## Internal Use
 
-We use Embed Src in our own CI/CD pipelines, ensuring our documentation is always synchronized with the latest code.
+We use fsrc in our own CI/CD pipelines, ensuring our documentation is always synchronized with the latest code.

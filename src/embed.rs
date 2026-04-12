@@ -62,8 +62,8 @@ pub struct ProcessResult {
     pub processed: String,
 }
 
-/// Process a file: find all `embed-src src="..."` directives and replace the
-/// content between them and their closing `/embed-src` markers.
+/// Process a file: find all `fsrc src="..."` directives and replace the
+/// content between them and their closing `/fsrc` markers.
 pub fn process_file(path: &Path) -> Result<ProcessResult, String> {
     let content = std::fs::read_to_string(path)
         .map_err(|e| format!("Failed to read {}: {}", path.display(), e))?;
@@ -80,20 +80,20 @@ pub fn process_file(path: &Path) -> Result<ProcessResult, String> {
 /// Process content, resolving source paths relative to `base_dir`.
 ///
 /// Markers are comment-agnostic: any line containing
-/// `embed-src src="path"` is an opening marker, and any line containing
-/// `/embed-src` is a closing marker. This allows embedding in any file type
+/// `fsrc src="path"` is an opening marker, and any line containing
+/// `/fsrc` is a closing marker. This allows embedding in any file type
 /// (markdown, Rust, Python, YAML, etc.).
 ///
 /// By default, content is inserted raw. Use the `fence` attribute to wrap in
 /// markdown code fences: `fence` or `fence="auto"` auto-detects the language
 /// from the source extension; `fence="python"` uses an explicit language tag.
 pub fn process_content(content: &str, base_dir: &Path) -> String {
-    let open_re = Regex::new(r#"embed-src\s+src="([^"]+)""#).unwrap();
+    let open_re = Regex::new(r#"fsrc\s+src="([^"]+)""#).unwrap();
     let lines_re = Regex::new(r#"lines="([^"]+)""#).unwrap();
     let fence_re = Regex::new(r#"\bfence(?:="([^"]*)")?"#).unwrap();
-    // Match /embed-src preceded by a non-word character (space, comment chars, etc.)
-    // but not as part of a URL like "urmzd/embed-src".
-    let close_re = Regex::new(r#"(?:^|[^a-zA-Z0-9_])/embed-src\b"#).unwrap();
+    // Match /fsrc preceded by a non-word character (space, comment chars, etc.)
+    // but not as part of a URL like "urmzd/fsrc".
+    let close_re = Regex::new(r#"(?:^|[^a-zA-Z0-9_])/fsrc\b"#).unwrap();
 
     let lines: Vec<&str> = content.lines().collect();
     let mut result = Vec::new();
@@ -154,7 +154,7 @@ pub fn process_content(content: &str, base_dir: &Path) -> String {
             if !found_close {
                 // No closing marker: emit remaining lines unchanged.
                 ui::warn(&format!(
-                    "no closing /embed-src found for directive at line {}",
+                    "no closing /fsrc found for directive at line {}",
                     i + 1
                 ));
                 i += 1;
@@ -237,7 +237,7 @@ mod tests {
 
     #[test]
     fn missing_close_tag() {
-        let input = "<!-- embed-src src=\"foo.rs\" -->\nstale content\n";
+        let input = "<!-- fsrc src=\"foo.rs\" -->\nstale content\n";
         let result = process_content(input, Path::new("."));
         // Should leave content unchanged when no closing tag.
         assert_eq!(result, input);

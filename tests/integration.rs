@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use embed_src::embed::{process_content, process_file};
+use fsrc::embed::{process_content, process_file};
 
 fn fixtures_dir() -> &'static Path {
     Path::new("tests/fixtures")
@@ -11,21 +11,21 @@ fn single_directive_fenced() {
     let input = "\
 # Sample
 
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 
 Done.
 ";
     let expected = "\
 # Sample
 
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
 ```rust
 fn main() {
     println!(\"Hello, world!\");
 }
 ```
-<!-- /embed-src -->
+<!-- /fsrc -->
 
 Done.
 ";
@@ -36,13 +36,13 @@ Done.
 #[test]
 fn multiple_directives() {
     let input = "\
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 
 Middle text.
 
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(result.contains("```rust"));
@@ -52,8 +52,8 @@ Middle text.
 #[test]
 fn missing_source_file() {
     let input = "\
-<!-- embed-src src=\"nonexistent.rs\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"nonexistent.rs\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     // Should leave content unchanged when source file missing.
@@ -62,7 +62,7 @@ fn missing_source_file() {
 
 #[test]
 fn missing_closing_tag() {
-    let input = "<!-- embed-src src=\"example.rs\" -->\nstale\n";
+    let input = "<!-- fsrc src=\"example.rs\" -->\nstale\n";
     let result = process_content(input, fixtures_dir());
     assert_eq!(result, input);
 }
@@ -70,8 +70,8 @@ fn missing_closing_tag() {
 #[test]
 fn idempotent() {
     let input = "\
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let first = process_content(input, fixtures_dir());
     let second = process_content(&first, fixtures_dir());
@@ -81,8 +81,8 @@ fn idempotent() {
 #[test]
 fn unknown_extension_fenced() {
     let input = "\
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(result.contains("```rust"));
@@ -90,7 +90,7 @@ fn unknown_extension_fenced() {
 
 #[test]
 fn process_file_works() {
-    let tmp_dir = std::env::temp_dir().join("embed-src-test");
+    let tmp_dir = std::env::temp_dir().join("fsrc-test");
     std::fs::create_dir_all(&tmp_dir).unwrap();
 
     let src = fixtures_dir().join("example.rs");
@@ -107,7 +107,7 @@ fn process_file_works() {
 
 #[test]
 fn verify_mode_detects_changes() {
-    let tmp_dir = std::env::temp_dir().join("embed-src-verify-test");
+    let tmp_dir = std::env::temp_dir().join("fsrc-verify-test");
     std::fs::create_dir_all(&tmp_dir).unwrap();
 
     std::fs::copy(
@@ -123,7 +123,7 @@ fn verify_mode_detects_changes() {
 
 #[test]
 fn dry_run_does_not_modify() {
-    let tmp_dir = std::env::temp_dir().join("embed-src-dry-test");
+    let tmp_dir = std::env::temp_dir().join("fsrc-dry-test");
     std::fs::create_dir_all(&tmp_dir).unwrap();
 
     std::fs::copy(
@@ -145,8 +145,8 @@ fn dry_run_does_not_modify() {
 #[test]
 fn nested_fences() {
     let input = "\
-<!-- embed-src src=\"has_fences.md\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"has_fences.md\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(
@@ -162,8 +162,8 @@ fn nested_fences() {
 #[test]
 fn nested_fences_idempotent() {
     let input = "\
-<!-- embed-src src=\"has_fences.md\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"has_fences.md\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let first = process_content(input, fixtures_dir());
     let second = process_content(&first, fixtures_dir());
@@ -173,7 +173,7 @@ fn nested_fences_idempotent() {
 // --- File-based tests for every comment style ---
 
 fn run_host_test(host_file: &str, expected_file: &str) {
-    let tmp_dir = std::env::temp_dir().join(format!("embed-src-{}", host_file));
+    let tmp_dir = std::env::temp_dir().join(format!("fsrc-{}", host_file));
     std::fs::create_dir_all(&tmp_dir).unwrap();
 
     // Copy source file and host file to temp dir.
@@ -235,8 +235,8 @@ fn host_yml() {
 fn lines_single_line() {
     // example.rs line 2 is: `    println!("Hello, world!");`
     let input = "\
-<!-- embed-src src=\"example.rs\" lines=\"2\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" lines=\"2\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(
@@ -253,8 +253,8 @@ fn lines_single_line() {
 fn lines_range() {
     // example.rs: line 1 = `fn main() {`, line 2 = `    println!(...)`, line 3 = `}`
     let input = "\
-<!-- embed-src src=\"example.rs\" lines=\"1-2\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" lines=\"1-2\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(result.contains("fn main()"), "should contain line 1");
@@ -265,8 +265,8 @@ fn lines_range() {
 #[test]
 fn lines_with_fence() {
     let input = "\
-<!-- embed-src src=\"example.rs\" lines=\"1\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" lines=\"1\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(result.contains("```rust"), "should have fence");
@@ -281,8 +281,8 @@ fn lines_with_fence() {
 fn lines_fence_before_lines() {
     // Attribute order: fence before lines should also work.
     let input = "\
-<!-- embed-src src=\"example.rs\" fence=\"auto\" lines=\"1\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" lines=\"1\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(result.contains("```rust"), "should have fence");
@@ -296,8 +296,8 @@ fn lines_fence_before_lines() {
 #[test]
 fn lines_open_end() {
     let input = "\
-<!-- embed-src src=\"example.rs\" lines=\"2-\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" lines=\"2-\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(!result.contains("fn main()"), "should not contain line 1");
@@ -307,8 +307,8 @@ fn lines_open_end() {
 #[test]
 fn lines_idempotent() {
     let input = "\
-<!-- embed-src src=\"example.rs\" lines=\"1-2\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" lines=\"1-2\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let first = process_content(input, fixtures_dir());
     let second = process_content(&first, fixtures_dir());
@@ -320,8 +320,8 @@ fn lines_idempotent() {
 #[test]
 fn raw_insertion() {
     let input = "\
-<!-- embed-src src=\"example.rs\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     // Raw: no backtick fences.
@@ -336,8 +336,8 @@ fn raw_insertion() {
 #[test]
 fn fence_explicit_language() {
     let input = "\
-<!-- embed-src src=\"example.rs\" fence=\"python\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"python\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(
@@ -351,8 +351,8 @@ fn fence_explicit_language() {
 fn fence_bare_attribute() {
     // fence without ="..." should auto-detect
     let input = "\
-<!-- embed-src src=\"example.rs\" fence -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     assert!(
@@ -365,8 +365,8 @@ fn fence_bare_attribute() {
 fn non_markdown_host_file_hash_comments() {
     let input = "\
 # Configuration file
-# embed-src src=\"example.rs\"
-# /embed-src
+# fsrc src=\"example.rs\"
+# /fsrc
 ";
     let result = process_content(input, fixtures_dir());
     assert!(
@@ -382,8 +382,8 @@ fn non_markdown_host_file_hash_comments() {
 #[test]
 fn non_markdown_host_file_slash_comments() {
     let input = "\
-// embed-src src=\"example.rs\" fence=\"auto\"
-// /embed-src
+// fsrc src=\"example.rs\" fence=\"auto\"
+// /fsrc
 ";
     let result = process_content(input, fixtures_dir());
     assert!(
@@ -399,8 +399,8 @@ fn fenced_code_block_skipped() {
 # Header
 
 ```markdown
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 ```
 
 Done.
@@ -416,17 +416,17 @@ fn fenced_code_block_then_real_directive() {
 # Header
 
 ```markdown
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 ```
 
-<!-- embed-src src=\"example.rs\" fence=\"auto\" -->
-<!-- /embed-src -->
+<!-- fsrc src=\"example.rs\" fence=\"auto\" -->
+<!-- /fsrc -->
 ";
     let result = process_content(input, fixtures_dir());
     // The directive inside the fence should be untouched.
     assert!(
-        result.contains("```markdown\n<!-- embed-src src=\"example.rs\" fence=\"auto\" -->\n<!-- /embed-src -->\n```"),
+        result.contains("```markdown\n<!-- fsrc src=\"example.rs\" fence=\"auto\" -->\n<!-- /fsrc -->\n```"),
         "fenced directive should be unchanged"
     );
     // The real directive after the fence should be processed.

@@ -2,10 +2,10 @@
 
 ## Configuration
 
-<!-- embed-src src="config.yml" fence="auto" -->
-<!-- /embed-src -->
+<!-- fsrc src="config.yml" fence="auto" -->
+<!-- /fsrc -->
 
 ## API Server
 
-<!-- embed-src src="api.py" fence="auto" -->
-<!-- /embed-src -->
+<!-- fsrc src="api.py" fence="auto" -->
+<!-- /fsrc -->

@@ -2,7 +2,7 @@
 
 ## Configuration
 
-<!-- embed-src src="config.yml" fence="auto" -->
+<!-- fsrc src="config.yml" fence="auto" -->
 ```yaml
 server:
   host: localhost
@@ -16,11 +16,11 @@ logging:
   level: info
   format: json
 ```
-<!-- /embed-src -->
+<!-- /fsrc -->
 
 ## API Server
 
-<!-- embed-src src="api.py" fence="auto" -->
+<!-- fsrc src="api.py" fence="auto" -->
 ```python
 from flask import Flask, jsonify
 
@@ -37,4 +37,4 @@ def list_users():
 if __name__ == "__main__":
     app.run(port=8080)
 ```
-<!-- /embed-src -->
+<!-- /fsrc -->

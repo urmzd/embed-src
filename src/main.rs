@@ -3,11 +3,11 @@ use std::process;
 
 use clap::{Parser, Subcommand};
 
-use embed_src::embed::process_file;
-use embed_src::ui;
+use fsrc::embed::process_file;
+use fsrc::ui;
 
 #[derive(Parser)]
-#[command(name = "embed-src", about = "Embed source files into any text file")]
+#[command(name = "fsrc", about = "Embed source files into any text file")]
 struct Cli {
     #[command(subcommand)]
     command: Command,
@@ -35,7 +35,7 @@ struct RunArgs {
 enum Command {
     /// Embed source files into text files
     Run(RunArgs),
-    /// Update embed-src to the latest release
+    /// Update fsrc to the latest release
     Update,
     /// Print version
     Version,
@@ -61,9 +61,9 @@ fn main() {
         Command::Update => {
             eprintln!("current version: {}", env!("CARGO_PKG_VERSION"));
             match agentspec_update::self_update(
-                "urmzd/embed-src",
+                "urmzd/fsrc",
                 env!("CARGO_PKG_VERSION"),
-                "embed-src",
+                "fsrc",
             ) {
                 Ok(agentspec_update::UpdateResult::AlreadyUpToDate) => {
                     eprintln!("already up to date")
@@ -78,7 +78,7 @@ fn main() {
             }
         }
         Command::Version => {
-            println!("embed-src {}", env!("CARGO_PKG_VERSION"));
+            println!("fsrc {}", env!("CARGO_PKG_VERSION"));
         }
     }
 }

@@ -1,10 +1,10 @@
 [package]
-name = "embed-src"
+name = "fsrc"
 version = "3.6.1"
 edition = "2021"
 description = "Embed source files into any text file"
 license = "Apache-2.0"
-repository = "https://github.com/urmzd/embed-src"
+repository = "https://github.com/urmzd/fsrc"
 
 [dependencies]
 clap = { version = "4", features = ["derive"] }

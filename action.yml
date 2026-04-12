@@ -1,4 +1,4 @@
-name: "Embed Src - Embed Anything"
+name: "fsrc - Embed Anything"
 description: "A GitHub Action that embeds source files into any text file."
 author: "urmzd"
 
@@ -42,15 +42,15 @@ runs:
         git config user.email "${{ inputs.commit-email }}"
         echo "::endgroup::"
 
-    - name: Download embed-src binary
+    - name: Download fsrc binary
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github-token }}
-        ES_REPO: ${{ github.action_repository }}
-        ES_REF: ${{ github.action_ref }}
+        FSRC_REPO: ${{ github.action_repository }}
+        FSRC_REF: ${{ github.action_ref }}
       run: |
         set -euo pipefail
-        echo "::group::Download embed-src binary"
+        echo "::group::Download fsrc binary"
 
         OS=$(uname -s | tr '[:upper:]' '[:lower:]')
         ARCH=$(uname -m)
@@ -66,40 +66,40 @@ runs:
           *) echo "::error::Unsupported OS: $OS"; exit 1 ;;
         esac
 
-        BINARY_NAME="embed-src-${TARGET}"
-        DEST="$HOME/.local/bin/embed-src"
+        BINARY_NAME="fsrc-${TARGET}"
+        DEST="$HOME/.local/bin/fsrc"
         mkdir -p "$HOME/.local/bin"
         echo "Target=$TARGET Binary=$BINARY_NAME"
 
         # Resolve action ref to a release tag.
         # exact tag (v3.5.2) → prefix match (v3 → v3.x.x) → latest release
-        API="https://api.github.com/repos/${ES_REPO}"
+        API="https://api.github.com/repos/${FSRC_REPO}"
         TAGS=$(curl -fsSL "${API}/releases?per_page=100" | jq -r '.[].tag_name')
-        RELEASE_TAG=$(echo "$TAGS" | grep -xF "$ES_REF" | head -1 || true)
-        [ -z "$RELEASE_TAG" ] && RELEASE_TAG=$(echo "$TAGS" | grep "^${ES_REF}\." | head -1 || true)
+        RELEASE_TAG=$(echo "$TAGS" | grep -xF "$FSRC_REF" | head -1 || true)
+        [ -z "$RELEASE_TAG" ] && RELEASE_TAG=$(echo "$TAGS" | grep "^${FSRC_REF}\." | head -1 || true)
         [ -z "$RELEASE_TAG" ] && RELEASE_TAG=$(echo "$TAGS" | head -1)
 
         if [ -z "$RELEASE_TAG" ]; then
-          echo "::error::No releases found for ${ES_REPO}"
+          echo "::error::No releases found for ${FSRC_REPO}"
           exit 1
         fi
-        echo "Resolved ref=${ES_REF} → release=${RELEASE_TAG}"
+        echo "Resolved ref=${FSRC_REF} → release=${RELEASE_TAG}"
 
-        URL="https://github.com/${ES_REPO}/releases/download/${RELEASE_TAG}/${BINARY_NAME}"
+        URL="https://github.com/${FSRC_REPO}/releases/download/${RELEASE_TAG}/${BINARY_NAME}"
         echo "Downloading ${URL}"
         curl -fsSL "$URL" -o "$DEST"
         chmod +x "$DEST"
         echo "$HOME/.local/bin" >> "$GITHUB_PATH"
-        echo "embed-src binary installed to ${DEST}"
+        echo "fsrc binary installed to ${DEST}"
         echo "::endgroup::"
 
-    - name: Run embed-src
+    - name: Run fsrc
       shell: bash
       run: |
-        echo "::group::Run embed-src"
+        echo "::group::Run fsrc"
         echo "Processing files: ${{ inputs.files }}"
         # shellcheck disable=SC2086
-        embed-src run ${{ inputs.files }}
+        fsrc run ${{ inputs.files }}
         echo "::endgroup::"
 
     - name: Stage, commit, and push

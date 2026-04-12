@@ -316,17 +316,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embed-src"
-version = "3.6.1"
-dependencies = [
- "agentspec-update",
- "clap",
- "crossterm",
- "indicatif",
- "regex",
-]
-
-[[package]]
 name = "encode_unicode"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -371,6 +360,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cb4cb245038516f5f85277875cdaa4f7d2c9a0fa0468de06ed190163b1581fcf"
 dependencies = [
  "percent-encoding",
+]
+
+[[package]]
+name = "fsrc"
+version = "3.6.1"
+dependencies = [
+ "agentspec-update",
+ "clap",
+ "crossterm",
+ "indicatif",
+ "regex",
 ]
 
 [[package]]

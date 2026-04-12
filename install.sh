@@ -1,16 +1,16 @@
 #!/bin/sh
-# install.sh — Installs the embed-src binary from GitHub releases.
+# install.sh — Installs the fsrc binary from GitHub releases.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/urmzd/embed-src/main/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/urmzd/fsrc/main/install.sh | sh
 #
 # Environment variables:
-#   EMBED_SRC_VERSION     — version to install (e.g. "v2.1.4"); defaults to latest
-#   EMBED_SRC_INSTALL_DIR — installation directory; defaults to $HOME/.local/bin
+#   FSRC_VERSION     — version to install (e.g. "v2.1.4"); defaults to latest
+#   FSRC_INSTALL_DIR — installation directory; defaults to $HOME/.local/bin
 
 set -eu
 
-REPO="urmzd/embed-src"
+REPO="urmzd/fsrc"
 
 # curl with optional auth — uses GH_TOKEN or GITHUB_TOKEN if set.
 gh_curl() {
@@ -49,8 +49,8 @@ main() {
             ;;
     esac
 
-    if [ -n "${EMBED_SRC_VERSION:-}" ]; then
-        tag="$EMBED_SRC_VERSION"
+    if [ -n "${FSRC_VERSION:-}" ]; then
+        tag="$FSRC_VERSION"
     else
         tag=$(gh_curl "https://api.github.com/repos/$REPO/releases/latest" \
             | sed -n 's/.*"tag_name": *"\([^"]*\)".*/\1/p')
@@ -59,17 +59,17 @@ main() {
         fi
     fi
 
-    artifact="embed-src-${target}"
+    artifact="fsrc-${target}"
     url="https://github.com/$REPO/releases/download/${tag}/${artifact}"
 
-    install_dir="${EMBED_SRC_INSTALL_DIR:-$HOME/.local/bin}"
+    install_dir="${FSRC_INSTALL_DIR:-$HOME/.local/bin}"
     mkdir -p "$install_dir"
 
-    echo "Downloading embed-src $tag for $target..."
-    gh_curl "$url" -o "$install_dir/embed-src"
-    chmod +x "$install_dir/embed-src"
+    echo "Downloading fsrc $tag for $target..."
+    gh_curl "$url" -o "$install_dir/fsrc"
+    chmod +x "$install_dir/fsrc"
 
-    echo "Installed embed-src to $install_dir/embed-src"
+    echo "Installed fsrc to $install_dir/fsrc"
 
     case ":$PATH:" in
         *":$install_dir:"*) ;;
@@ -98,7 +98,7 @@ add_to_path() {
             mkdir -p "$(dirname "$profile")"
             {
                 echo ""
-                echo "# Added by embed-src installer"
+                echo "# Added by fsrc installer"
                 echo "set -Ux fish_user_paths $install_dir \$fish_user_paths"
             } >> "$profile"
             echo "Added $install_dir to $profile"
@@ -107,7 +107,7 @@ add_to_path() {
     elif [ -n "$profile" ] && ! grep -q "$install_dir" "$profile" 2>/dev/null; then
         {
             echo ""
-            echo "# Added by embed-src installer"
+            echo "# Added by fsrc installer"
             echo "export PATH=\"$install_dir:\$PATH\""
         } >> "$profile"
         echo "Added $install_dir to $profile"

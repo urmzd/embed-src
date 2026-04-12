@@ -1,3 +1,3 @@
 -- Schema
--- embed-src src="example.rs"
--- /embed-src
+-- fsrc src="example.rs"
+-- /fsrc
