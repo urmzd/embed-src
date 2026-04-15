@@ -33,6 +33,7 @@ runs:
   using: "composite"
   steps:
     - name: Configure git identity
+      if: inputs.commit-dry != 'true'
       shell: bash
       run: |
         echo "::group::Configure git identity"
