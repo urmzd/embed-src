@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.0.1 (2026-04-16)
+
+### Bug Fixes
+
+- **ci**: migrate sr v4 to v7 for artifact and input support (#20) ([a608161](https://github.com/urmzd/fsrc/commit/a6081617cfe67a7383689e4c556c01d8871af1cc))
+- skip git config in dry-run mode ([bac674f](https://github.com/urmzd/fsrc/commit/bac674f5de73754f000dbc07f8cf010b4825ce39))
+- **ci**: stage Cargo.lock in release to fix cargo publish ([246f102](https://github.com/urmzd/fsrc/commit/246f102ea52fbe3ff368e6cd2b89f6afa4adfe70))
+
+### Refactoring
+
+- inline agentspec-update (#18) ([5d50660](https://github.com/urmzd/fsrc/commit/5d5066037ccc9923fa2ed73a9c44e4c365ad6a8a))
+
+### Misc
+
+- migrate sr config and action to v4 ([dc9da81](https://github.com/urmzd/fsrc/commit/dc9da81d240e266e16ad64a9f8a8833ecfcfebff))
+
+[Full Changelog](https://github.com/urmzd/fsrc/compare/v4.0.0...v4.0.1)
+
+
 ## 4.0.0 (2026-04-12)
 
 ### Breaking Changes
