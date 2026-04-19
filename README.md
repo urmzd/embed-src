@@ -14,6 +14,8 @@
 <p align="center">
   <a href="https://github.com/urmzd/fsrc/actions/workflows/ci.yml"><img src="https://github.com/urmzd/fsrc/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="https://crates.io/crates/fsrc"><img src="https://img.shields.io/crates/v/fsrc" alt="crates.io"></a>
+  &nbsp;
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/urmzd/fsrc" alt="License"></a>
 </p>
 
 ## Showcase
